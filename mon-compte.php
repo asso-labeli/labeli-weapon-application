@@ -35,7 +35,7 @@ include("fragments/header.php");
 
 <section id="my-infos" class="col-xs-12">
 	<div class="card-title col-xs-12">
-		Mes espace personnel
+		Mon espace personnel
 
 	</div>
 	<div class="row">
