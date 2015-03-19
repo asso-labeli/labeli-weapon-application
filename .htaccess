@@ -1,0 +1,3 @@
+RewriteEngine On
+
+RewriteRule ^mon-compte$ mon-compte.php [L]

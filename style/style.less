@@ -1,0 +1,305 @@
+@import 'colors';
+
+* {
+	font-family: 'Roboto', sans-serif;
+	font-size: 1.02em;
+}
+
+html, body {
+	height: 100%;
+}
+
+.container {
+	height: 100%;
+
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+.main-template {
+	padding: 50px 0;
+	min-height: 100%;
+}
+
+.shadow {
+	box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.37);
+}
+
+body {
+	background: @body-bg;
+}
+
+.card {
+	margin: 10px 0;
+	background: @card-background;
+	border-radius: 2px;
+	padding: 0;
+	.shadow;
+
+	.ban {
+		width: 100%;
+		border-radius: 2px 2px 0 0;
+	}
+
+	.text {
+		padding: 20px;
+
+		.title {
+			font-size: 1.5em;
+			font-weight: 500;
+			margin-bottom: 10px;
+		}
+		.description {
+			margin-bottom: 10px;
+		}
+
+
+	}
+}
+
+#presentation {
+	.when {
+		/*		margin-bottom: 10px;*/
+	}
+
+	/*	.infos {
+	display: table;
+	table-layout: fixed;
+	padding: 0 10px;
+}*/
+
+	.when, .where {
+		margin-top: 15px;
+		vertical-align: middle;
+		font-size: 1.07em;
+		color: #777;
+		border-left: 5px solid #777;
+		display:table-cell;
+		height: 60px;
+		display: table-cell;
+		padding-left: 10px;
+		margin-bottom: 5px;
+	}
+}
+
+#tournaments {
+	.when {
+		margin-top: 15px;
+		vertical-align: middle;
+		font-size: 1.07em;
+		color: #777;
+		border-left: 5px solid #777;
+		height: 30px;
+		line-height: 30px;
+		padding-left: 10px;
+	}
+}
+
+.card-title {
+	background: @title-bg;
+	color: @title-color;
+	border-radius: 2px;
+	margin: 10px 0;
+	padding: 0;
+	padding: 10px 30px;
+	font-size: 1.5em;
+	.shadow;
+}
+
+section {
+	margin: 20px 0;
+}
+
+// NAVBAR
+.header-logo {
+	margin-top: -10px;
+	height: 40px; 
+}
+
+body .navbar-inverse {
+	background-color: @header-bg;
+	border-color: lighten(@header-bg, 7);
+	color: @header-color;
+	.shadow;
+}
+
+body .navbar-inverse .navbar-nav>.active>a, body .navbar-inverse .navbar-nav>.active>a:focus, body .navbar-inverse .navbar-nav>.active>a:hover {
+	color: @header-color;
+	background-color: lighten(@header-bg, 7);
+}
+
+body .navbar-inverse .navbar-nav>li>a { 
+	color: @header-color;
+}
+
+body .navbar-inverse .navbar-toggle {
+	border-color: darken(@header-bg, 10);
+}
+
+body .navbar-inverse .navbar-toggle:focus, body .navbar-inverse .navbar-toggle:hover {
+	background-color: darken(@header-bg, 10);
+}
+
+body .navbar-inverse .navbar-collapse, body .navbar-inverse .navbar-form {
+	border-color: darken(@header-bg, 10);
+}
+
+// END NAVBAR
+
+
+// DIALOG
+.modal-header {
+	background: @title-bg;
+	color: @title-color;
+
+	button {
+		color:@title-color;
+
+		&:hover {
+			color:@title-color;
+		}
+	}
+
+
+}
+
+.modal-body {
+	h3 {
+		margin-top : 0px;
+	}
+	.notice {
+		margin-top: 15px;
+		vertical-align: middle;
+		font-size: 1.07em;
+		color: #777;
+		border-left: 5px solid #777;
+		height: 50px;
+		line-height: 50px;
+		padding-left: 10px;
+
+		a {
+			color: @title-bg;
+		}
+	}
+	.description {
+		background : @body-bg;
+		padding: 10px;
+		margin-bottom: 10px;
+		.shadow;
+	}
+	
+	select {
+		margin: 5px 0;
+		padding: 5px 7px;
+		width: 100%;
+		border: 1px #CCC solid;
+
+		&:focus {
+			.shadow;
+			outline: 0;
+		}
+	}
+}
+// END DIALOG
+
+footer {
+	margin-top: 50px;
+	text-align: center;
+	color: darken(@body-bg, 30);
+}
+
+#access-account {
+	.form-title {
+		margin-bottom: 20px;
+	}
+	input {
+		margin: 5px 0;
+		padding: 5px 7px;
+		width: 100%;
+		border: 1px #CCC solid;
+
+		&:focus {
+			.shadow;
+			outline: 0;
+		}
+	}
+	.errors {
+		margin-top: 10px;
+		color: #777;
+		font-style: italic;
+	}
+}
+
+.button {
+	background: lighten(@title-bg, 10);
+	padding: 10px;
+	color: @title-color;
+	margin-top: 20px;
+	border-radius: 5px;
+	text-align: center;
+	.shadow;
+
+	&:hover {
+		background: lighten(@title-bg, 20);
+		.plus {
+			color: lighten(@title-bg, 20);
+		}
+	}
+
+	.plus {
+		color : lighten(@title-bg, 10);
+		background: @title-color;
+		height: 25px;
+		width: 25px;
+		text-align: center;
+		border-radius: 50px;
+		display: inline-block;
+		font-size: 25px;
+		line-height: 25px;
+		margin-left: 30px;
+	}
+}
+
+#my-infos {
+	display: none;
+
+	.disconnect-button {
+		max-width: 200px;
+		float: right;
+
+
+	}
+
+	.identity {
+
+		background : @body-bg;
+		padding: 10px;
+		margin-bottom: 10px;
+		.shadow;
+
+		.id-title {
+			font-size: 1.1em;
+			margin-bottom: 10px;
+		}
+	}
+}
+
+.my-tournaments {
+	margin-bottom: 20px;
+
+
+}
+
+.clear {
+	clear: both;
+}
+
+.achtung {
+	margin-bottom: 10px;
+	color: #777;
+	font-style: italic;
+	
+	
+}
+
