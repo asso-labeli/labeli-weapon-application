@@ -61,7 +61,6 @@ $(document).ready(function() {
 				   {
 				"data[User][username]" : username, 
 				"data[User][password]" : password,
-				"data[User][level]": 1,
 				"data[User][firstName]": firstname,
 				"data[User][lastName]": lastname,
 				"data[User][email]" : email
@@ -115,9 +114,9 @@ $(document).ready(function() {
 			} else {
 				if(required){
 					$.post("http://weapon.labeli.org/usergames/"+gameId+".json", {
-						"data[User][username]" : usergame,
-						"data[UserGame][level]" : 0,
-						"date[User][grade]" :0
+						"data[Usergame][username]" : usergame,
+						"data[Usergame][level]" : 0,
+						"date[Usergame][grade]" :0
 					}, function(){
 						$.getJSON("http://weapon.labeli.org/tournaments/book/"+tournamentId+".json", function(){
 							window.location = "/mon-compte";
