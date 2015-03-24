@@ -12,7 +12,7 @@ include("fragments/header.php");
 	<div class="row">
 		<div class="col-xs-12 col-sm-6"><div class="card"><div class="text">
 			<div class="row" id="connect">
-				<div class="col-xs-12 form-title">Connection</div>
+				<div class="col-xs-12 form-title">Connexion</div>
 				<div class="col-xs-12"><input type="text" placeholder="Nom d'utilisateur" class="username"></div>
 				<div class="col-xs-12"><input type="password" placeholder="Mot de passe" class="password"></div>
 				<div class="col-xs-12 errors"></div>
