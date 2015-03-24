@@ -3,6 +3,7 @@ var userId;
 $(document).ready(function () {
 
 	var conf;
+	var optionsTime = {hour: "numeric", minute: "numeric"};
 
 	var confRequest = $.getJSON("/conf.json", function (response) {
 		conf = response;
@@ -90,7 +91,7 @@ $(document).ready(function () {
 				if (value.max > 0) {
 					var start = new Date(value.start.replace("-", " ", "g"));
 					var end = new Date(value.end.replace("-", " ", "g"));
-					var when = "De " + start.toLocaleTimeString() + " à " + end.toLocaleTimeString();
+					var when = "De " + start.toLocaleTimeString("fr-FR", optionsTime) + " à " + end.toLocaleTimeString("fr-FR", optionsTime);
 					var option = '<option data-game="' + value.idGame + '" data-infos-required="' + value.infoRequired + '" data-mac-required="' + value.macRequired + '" value="' + value.id + '">' + value.name + ' - ' + when + '</option>';
 					$(".modal-body #list-games").append(option);
 				}
@@ -194,6 +195,7 @@ function loadUserGameInfos(data)
 }
 
 function loadInfos(data) {
+	var optionsTime = {hour: "numeric", minute: "numeric"};
 	userId = data.User.id;
 	$("#my-infos .username").text(data.User.username);
 	$("#my-infos .email").text(data.User.email);
@@ -216,7 +218,7 @@ function loadInfos(data) {
 			if (response.data.Tournament.max > 0) {
 				var start = new Date(response.data.Tournament.start.replace("-", " ", "g"));
 				var end = new Date(response.data.Tournament.end.replace("-", " ", "g"));
-				var when = "De " + start.toLocaleTimeString() + " à " + end.toLocaleTimeString();
+				var when = "De " + start.toLocaleTimeString("fr-FR", optionsTime) + " à " + end.toLocaleTimeString("fr-FR", optionsTime);
 				var button = '<span class="plus">-</span>';
 				var row = "<li class='gameline'>" + response.data.Game.name + " - " + when + "</li>";
 				$(".my-tournaments-list").append(row);
