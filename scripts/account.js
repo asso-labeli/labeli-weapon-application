@@ -115,8 +115,8 @@ $(document).ready(function() {
 				if(required){
 					$.post("http://weapon.labeli.org/usergames/"+gameId+".json", {
 						"data[Usergame][username]" : usergame,
-						"data[Usergame][level]" : 30,
-						"data[Usergame][grade]" : "unranked"
+						"data[Usergame][level]" : 0,
+						"data[Usergame][grade]" : "unknown"
 					}, function(){
 						$.getJSON("http://weapon.labeli.org/tournaments/book/"+tournamentId+".json", function(){
 							window.location = "/mon-compte";
