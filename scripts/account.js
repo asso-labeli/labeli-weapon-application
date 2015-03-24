@@ -153,6 +153,7 @@ $(document).ready(function () {
 	$("#list-games").on("change", function () {
 		var required = $(this).children("option:selected").data("infos-required");
 		var macRequired = $(this).children("option:selected").data("mac-required");
+		var idGame = $(this).children("option:selected").data("game");
 		
 		$(".requiredInfo").empty();
 		
@@ -161,7 +162,12 @@ $(document).ready(function () {
 			macAlert = 'Attention, votre adresse MAC doit être renseignée pour pouvoir vous inscrire';
 
 		if (required)
+		{
 			$(".requiredInfo").html('Nom d\'utilisateur sur ce jeu : <input type="text" id="usergame">' + macAlert);
+			$.getJSON("http://weapon.labeli.org/usergames/" + idGame + ".json", function (response) {
+						loadUserGameInfos(response.data);
+					});
+		}
 		else if (macRequired)
 			$(".requiredInfo").html(macAlert);
 	});
@@ -180,6 +186,11 @@ function disconnect() {
 
 		window.location = "/";
 	});
+}
+
+function loadUserGameInfos(data)
+{
+	$('#usergame').val(data.Usergame.username);
 }
 
 function loadInfos(data) {

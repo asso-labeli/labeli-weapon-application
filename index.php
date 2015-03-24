@@ -8,7 +8,10 @@ include("fragments/header.php");
 					<div id="presentation" class="card col-xs-12">
 						<img class="ban" src="/images/event_ban.png" alt="">
 						<div class="text col-xs-12">
-							<div class="title col-xs-12"></div>
+							<div class="col-xs-12">
+								<div class="title col-xs-9"></div>
+								<a href="mon-compte.php" class="button col-xs-3">S'inscrire</a>
+							</div>
 							<div class="description col-xs-12"></div>
 							<div class="infos">
 								<div class="col-xs-12 col-md-6"><div class="when"></div></div>
@@ -19,7 +22,7 @@ include("fragments/header.php");
 				</section>
 				<section class="col-xs-12">
 					<div class="card-title col-xs-12">
-						Tournois
+						Tournois / Concours
 					</div>
 					<div class="row" id="tournaments">
 
