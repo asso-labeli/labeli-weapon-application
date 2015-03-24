@@ -27,3 +27,5 @@ node_modules
 # Users Environment Variables
 .lock-wscript
 /nbproject/private/
+nbproject/project.properties
+nbproject/project.xml
