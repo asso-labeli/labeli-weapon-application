@@ -26,11 +26,11 @@ $(document).ready(function () {
 				var start = new Date(value.start.replace("-", " ", "g"));
 				var end = new Date(value.end.replace("-", " ", "g"));
 				var when = "De "+start.toLocaleTimeString() + " à "+end.toLocaleTimeString();
-				$("#tournaments").append('<div class="col-xs-12 col-sm-6 col-md-4"><div class="card" data-toggle="modal" data-target="#basicModal" data-rule="'+value.idRule+'"><div class="text"><div>'+value.name+'</div><div class="when">'+when+'</div></div></div></div>')
+				$("#tournaments").append('<div class="col-xs-12 col-sm-6 col-md-4"><div class="baby-card card" data-toggle="modal" data-target="#basicModal" data-rule="'+value.idRule+'"><div class="text"><div>'+value.name+'</div><div class="when">'+when+'</div></div></div></div>')
 			});
 			
 			$.each(response.data.SelfService, function (index, value){
-				$("#self-service").append('<div class="col-xs-12 col-sm-6 col-md-4"><div class="card" data-toggle="modal" data-target="#basicModal" data-id="'+value.id+'"><div class="text"><div>'+value.name+'</div></div></div></div>')
+				$("#self-service").append('<div class="col-xs-12 col-sm-6 col-md-4"><div class="baby-card card" data-toggle="modal" data-target="#basicModal" data-id="'+value.id+'"><div class="text"><div>'+value.name+'</div></div></div></div>')
 			});
 
 

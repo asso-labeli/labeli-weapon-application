@@ -56,6 +56,9 @@ body {
 
 
 	}
+	&.baby-card {
+		cursor: pointer;
+	}
 }
 
 #presentation {
@@ -188,7 +191,7 @@ body .navbar-inverse .navbar-collapse, body .navbar-inverse .navbar-form {
 		margin-bottom: 10px;
 		.shadow;
 	}
-	
+
 	select {
 		margin: 5px 0;
 		padding: 5px 7px;
@@ -232,6 +235,7 @@ footer {
 }
 
 .button {
+	cursor: pointer;
 	background: lighten(@title-bg, 10);
 	padding: 10px;
 	color: @title-color;
@@ -283,6 +287,10 @@ footer {
 			margin-bottom: 10px;
 		}
 	}
+
+	.label {
+		color: #000;
+	}
 }
 
 .my-tournaments {
@@ -299,7 +307,30 @@ footer {
 	margin-bottom: 10px;
 	color: #777;
 	font-style: italic;
-	
-	
+
+
+}
+
+input:not([type="radio"]) {
+	margin: 5px 0;
+	padding: 5px 7px;
+	width: 100%;
+	border: 1px #CCC solid;
+
+	&:focus {
+		.shadow;
+		outline: 0;
+	}
+}
+
+input[type="radio"] {
+	margin-left: 10px;
+	display: inline-block;
+}
+
+.addTourn-error {
+	margin-top: 10px;
+	color: #777;
+	font-style: italic;
 }
 

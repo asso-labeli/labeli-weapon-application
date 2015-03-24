@@ -1,3 +1,5 @@
+var userId;
+
 $(document).ready(function() {
 
 	var conf;
@@ -16,7 +18,7 @@ $(document).ready(function() {
 	$.getJSON("http://weapon.labeli.org/users/info.json", function(response) {
 		$("#access-account").hide();
 		$("#my-infos").show();
-		
+
 		loadInfos(response.data);
 	}).fail(function(jqXHR) {
 		if (jqXHR.status == 403) {
@@ -81,14 +83,18 @@ $(document).ready(function() {
 	});
 
 	$(".my-tournaments").on("click", ".button", function(){
+		$(".requiredInfo").empty();
+		$(".addTourn-error").empty();
 		$(".modal-body #list-games").html('<option value="null">- Veuillez choisir un jeu -</option>');
 		$.getJSON("http://weapon.labeli.org/events/"+conf.event.id+".json", function(response){
 			$.each(response.data.Tournament, function (index, value){
-				var start = new Date(value.start.replace("-", " ", "g"));
-				var end = new Date(value.end.replace("-", " ", "g"));
-				var when = "De "+start.toLocaleTimeString() + " à "+end.toLocaleTimeString();
-				var option = '<option value="'+value.id+'">'+value.name+' - '+when+'</option>';
-				$(".modal-body #list-games").append(option);
+				if(value.max > 0){
+					var start = new Date(value.start.replace("-", " ", "g"));
+					var end = new Date(value.end.replace("-", " ", "g"));
+					var when = "De "+start.toLocaleTimeString() + " à "+end.toLocaleTimeString();
+					var option = '<option data-game="'+value.idGame+'" data-infos-required="'+value.infoRequired+'" value="'+value.id+'">'+value.name+' - '+when+'</option>';
+					$(".modal-body #list-games").append(option);
+				}
 			});
 
 		});
@@ -96,13 +102,71 @@ $(document).ready(function() {
 
 	$(".modal-body").on("click", ".button-validate-add", function(){
 		var tournamentId = $("#list-games").val();
+		var required = $("#list-games option:selected").data("infos-required");
+		var gameId = $("#list-games option:selected").data("game");
+		var usergame = null;
+
 		if(tournamentId != null) {
-			$.getJSON("http://weapon.labeli.org/tournaments/book/"+tournamentId+".json", function(){
-				window.location = "/mon-compte";
-			});
-			$('#basicModal').modal('hide');
+			if(required){
+				usergame = $(".requiredInfo input").val();
+			} 
+			if(required && (usergame == null || usergame == "") ){
+				$(".addTourn-error").text("Vous devez compléter les informations pour vous inscrire à ce tournoi.")
+			} else {
+				if(required){
+					$.post("http://weapon.labeli.org/usergames/"+gameId+".json", {
+						"data[User][username]" : usergame,
+						"data[UserGame][level]" : 0,
+						"date[User][grade]" :0
+					}, function(){
+						$.getJSON("http://weapon.labeli.org/tournaments/book/"+tournamentId+".json", function(){
+							window.location = "/mon-compte";
+						});
+						$('#basicModal').modal('hide');
+					});
+				} else {
+					$.getJSON("http://weapon.labeli.org/tournaments/book/"+tournamentId+".json", function(){
+						window.location = "/mon-compte";
+					});
+					$('#basicModal').modal('hide');
+				}
+			}
 		}
 	})
+
+
+
+	$(".modal-body").on("click",".button-validate-change-infos", function(){
+		var shirtSize = $("#changeInfos #shirtSize").val();
+		var macAdress = $("#changeInfos #macAdress").val();
+		var hasPizza = $('#changeInfos input[name=hasPizza]:checked').val();
+
+		var params = {"data[User][sizeShirt]" : shirtSize, 
+					  "data[User][macAddress]" : macAdress,
+					  "data[User][data]": hasPizza};
+
+		$.post("http://weapon.labeli.org/users/"+userId+".json", params, function(){
+			window.location = "/mon-compte";
+		});
+
+	});
+
+	$("#list-games").on("change", function(){
+		var required = $(this).children("option:selected").data("infos-required");
+		if(required) {
+			$(".requiredInfo").html('Nom d\'utilisateur sur ce jeu : <input type="text" id="usergame">');
+		} else {
+			$(".requiredInfo").empty();
+
+		}
+	});
+
+
+
+
+
+
+
 
 });
 
@@ -114,19 +178,32 @@ function disconnect(){
 }
 
 function loadInfos(data){
+	userId = data.User.id;
 	$("#my-infos .username").text(data.User.username);
 	$("#my-infos .email").text(data.User.email);
 	$("#my-infos .firstname").text(data.User.firstName);
 	$("#my-infos .lastname").text(data.User.lastName);
+	$("#my-infos .shirtSize").text(data.User.sizeShirt);
+	$("#my-infos .macAdress").text(data.User.macAddress);
+	$("#my-infos .hasPizza").text(data.User.data);
+
+	$("#changeInfos #shirtSize").val(data.User.sizeShirt);
+	$("#changeInfos #macAdress").val(data.User.macAddress);
+	var $radios = $('input:radio[name=hasPizza]');
+	$radios.filter('[value='+data.User.data+']').prop('checked', true);
+
+
 
 	$.each(data.Tournament, function(index, value){
 		var id=value.idTournament;
 		$.getJSON("http://weapon.labeli.org/tournaments/"+id+".json", function(response){
-			var start = new Date(response.data.Tournament.start.replace("-", " ", "g"));
-			var end = new Date(response.data.Tournament.end.replace("-", " ", "g"));
-			var when = "De "+start.toLocaleTimeString() + " à "+end.toLocaleTimeString();
-			var row = "<li class='gameline'>"+response.data.Game.name+" - "+when+"</li>";
-			$(".my-tournaments-list").append(row);
+			if(response.data.Tournament.max > 0){
+				var start = new Date(response.data.Tournament.start.replace("-", " ", "g"));
+				var end = new Date(response.data.Tournament.end.replace("-", " ", "g"));
+				var when = "De "+start.toLocaleTimeString() + " à "+end.toLocaleTimeString();
+				var row = "<li class='gameline'>"+response.data.Game.name+" - "+when+"</li>";
+				$(".my-tournaments-list").append(row);
+			}
 		});
 	});
 }
