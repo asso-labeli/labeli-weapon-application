@@ -11,8 +11,8 @@ include("fragments/header.php");
 							<div class="title col-xs-12"></div>
 							<div class="description col-xs-12"></div>
 							<div class="infos">
-								<div class="col-xs-12 col-md-6"><div class="when">test</div></div>
-								<div class="col-xs-12 col-md-6"><div class="where">test</div></div>
+								<div class="col-xs-12 col-md-6"><div class="when"></div></div>
+								<div class="col-xs-12 col-md-6"><div class="where"></div></div>
 							</div>
 						</div>
 					</div>
