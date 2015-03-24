@@ -35,7 +35,7 @@ include("fragments/header.php");
 
 <section id="my-infos" class="col-xs-12">
 	<div class="card-title col-xs-12">
-		Mes espace personnel
+		Mon espace personnel
 
 	</div>
 	<div class="row">
@@ -111,7 +111,7 @@ include("fragments/header.php");
 								<option value="XL">XL</option>
 							</select>
 						</div>
-						<div>Adresse MAC : <input type="text" id="macAdress"></div>
+						<div>Adresse MAC : (<a href="http://weapon.labeli.org/mac" target="_blank">aide</a>)<input type="text" id="macAdress"></div>
 						<div>(*) Je prendrai une pizza ? (8€50)
 							<input type="radio" name="hasPizza" value="Non" checked> Non
 							<input type="radio" name="hasPizza" value="Oui"> Oui
