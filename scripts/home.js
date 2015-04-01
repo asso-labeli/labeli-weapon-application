@@ -13,6 +13,7 @@ $(document).ready(function () {
 		$.getJSON("http://weapon.labeli.org/events/" + conf.event.id + ".json", function (response) {
 			var title = response.data.Event.name + " - " + response.data.Event.seats + " personnes";
 			var description = response.data.Event.description;
+			var remainingSeats = response.data.Event.seats - response.data.Registration.length;
 
 			var start = new Date(response.data.Event.start.replace("-", " ", "g"));
 			var end = new Date(response.data.Event.end.replace("-", " ", "g"));
@@ -23,6 +24,7 @@ $(document).ready(function () {
 			$("#presentation .description").html(description);
 			$("#presentation .when").html(when);
 			$("#presentation .where").html(where);
+			$("#putaclic").html(remainingSeats);
 
 			$.each(response.data.Tournament, function (index, value) {
 				var start = new Date(value.start.replace("-", " ", "g"));
