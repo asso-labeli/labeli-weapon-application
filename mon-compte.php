@@ -47,6 +47,13 @@ include("fragments/header.php");
 						<div class="col-xs-12"><ul class="my-tournaments-list"></ul></div>
 						<div class="col-xs-12"><div class="button" data-toggle="modal" data-target="#basicModal">Inscription à un tournoi<span class="plus">+</span></div></div>
 					</div>
+					
+					<div class="my-teams row">
+						<div class="title col-xs-12">Mes équipes</div>
+						<div class="col-xs-12"><ul class="my-teams-list"></ul></div>
+						<div class="col-xs-12"><div class="button button-create-team" data-toggle="modal" data-target="#createTeam">Créer une équipe<span class="plus">+</span></div></div>
+						<div class="col-xs-12"><div class="button button-join-team" data-toggle="modal" data-target="#addTeam">Rejoindre une équipe<span class="plus">+</span></div></div>
+					</div>
 				</div>
 				<div class="col-xs-12 col-sm-5 col-md-4">
 					<div class="identity">
@@ -117,6 +124,42 @@ include("fragments/header.php");
 							<input type="radio" name="hasPizza" value="Oui"> Oui
 						</div>
 						<div class="button button-validate-change-infos">Valider</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="modal fade" id="addTeam" tabindex="-1" role="dialog" aria-labelledby="addTeam" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+						<h4 class="modal-title" id="myModalLabel">Rejoindre une équipe</h4>
+					</div>
+					<div class="modal-body">
+						<div class="achtung">AIDE : Le code de l'équipe vous est donné par le créateur de l'équipe.</div>
+						<div>Code de l'équipe : <input type="text" id="code"></div>
+						<div class="button button-validate-add-team">Valider</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="modal fade" id="createTeam" tabindex="-1" role="dialog" aria-labelledby="createTeam" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+						<h4 class="modal-title" id="myModalLabel">Créer une équipe</h4>
+					</div>
+					<div class="modal-body">
+						<div class="achtung">IMPORTANT : Vous devez être inscrit au tournoi et vos coéquipiers aussi.</div>
+						<div>Choisissez un tournoi</div>
+							<select name="tournament" id="tournament">
+								<option value="null">- Veuillez choisir un jeu -</option>
+							</select>
+						<div>Nom de l'équipe : <input type="text" id="name"></div>
+						<div>Description de l'équipe : <input type="text" id="description"></div>
+						<div class="button button-validate-create-team">Valider</div>
 					</div>
 				</div>
 			</div>

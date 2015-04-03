@@ -100,6 +100,19 @@ $(document).ready(function () {
 		});
 	});
 
+	$(".my-teams").on("click", ".button-create-team", function () {
+		$(".modal-body #tournament").html('<option value="null">- Veuillez choisir un jeu -</option>');
+		$.getJSON("http://weapon.labeli.org/events/" + conf.event.id + ".json", function (response) {
+			$.each(response.data.Tournament, function (index, value) {
+				if (value.max > 0) {
+					var option = '<option data-game="' + value.idGame + '" value="' + value.id + '">' + value.name + '</option>';
+					$(".modal-body #tournament").append(option);
+				}
+			});
+
+		});
+	});
+
 	$(".modal-body").on("click", ".button-validate-add", function () {
 		var tournamentId = $("#list-games").val();
 		var required = $("#list-games option:selected").data("infos-required");
@@ -132,7 +145,51 @@ $(document).ready(function () {
 				}
 			}
 		}
-	})
+	});
+
+	$(".modal-body").on("click", ".button-validate-create-team", function () {
+		var idTournament = $("#createTeam #tournament").val();
+		var name = $("#createTeam #name").val();
+		var description = $('#createTeam #description').val();
+
+		var params = {"data[Team][name]": name,
+			"data[Team][description]": description,
+			"data[TournamentTeam][idTournament]": idTournament};
+
+		$.post("http://weapon.labeli.org/teams/create.json", params, function () {
+			window.location = "/mon-compte";
+		});
+
+	});
+
+	$(".my-teams-list").on("click", ".button-leave-team", function () {
+		var team = $(this).data("team");
+		$.get("http://weapon.labeli.org/teams/leave/" + team + ".json", function () {
+			window.location = "/mon-compte";
+		});
+
+	});
+
+	$(".my-teams-list").on("click", ".button-delete-team", function () {
+		if (window.confirm("Êtes vous sûr de vouloir supprimer complétement cette équipe ?"))
+		{
+			var team = $(this).data("team");
+			$.get("http://weapon.labeli.org/teams/delete/" + team + ".json", function () {
+				window.location = "/mon-compte";
+			});
+		}
+		else
+			console.log("WTF");
+	});
+
+	$(".modal-body").on("click", ".button-validate-add-team", function () {
+		var code = $('#addTeam #code').val();
+
+		$.get("http://weapon.labeli.org/teams/join/" + code + ".json", function () {
+			window.location = "/mon-compte";
+		});
+
+	});
 
 
 
@@ -155,9 +212,9 @@ $(document).ready(function () {
 		var required = $(this).children("option:selected").data("infos-required");
 		var macRequired = $(this).children("option:selected").data("mac-required");
 		var idGame = $(this).children("option:selected").data("game");
-		
+
 		$(".requiredInfo").empty();
-		
+
 		var macAlert = '';
 		if (macRequired)
 			macAlert = 'Attention, votre adresse MAC doit être renseignée pour pouvoir vous inscrire';
@@ -166,8 +223,8 @@ $(document).ready(function () {
 		{
 			$(".requiredInfo").html('Nom d\'utilisateur sur ce jeu : <input type="text" id="usergame">' + macAlert);
 			$.getJSON("http://weapon.labeli.org/usergames/" + idGame + ".json", function (response) {
-						loadUserGameInfos(response.data);
-					});
+				loadUserGameInfos(response.data);
+			});
 		}
 		else if (macRequired)
 			$(".requiredInfo").html(macAlert);
@@ -219,10 +276,28 @@ function loadInfos(data) {
 				var start = new Date(response.data.Tournament.start.replace("-", " ", "g"));
 				var end = new Date(response.data.Tournament.end.replace("-", " ", "g"));
 				var when = "De " + start.toLocaleTimeString("fr-FR", optionsTime) + " à " + end.toLocaleTimeString("fr-FR", optionsTime);
-				var button = '<span class="plus">-</span>';
 				var row = "<li class='gameline'>" + response.data.Game.name + " - " + when + "</li>";
 				$(".my-tournaments-list").append(row);
 			}
+		});
+	});
+
+	$.each(data.Team, function (index, value) {
+		var id = value.id;
+		$.getJSON("http://weapon.labeli.org/teams/" + id + ".json", function (response) {
+			console.log(response);
+			var members = [];
+			for (var i = 0; i < response.data.User.length; i++)
+				members.push(response.data.User[i].firstName + ' &laquo;' + response.data.User[i].username + '&raquo; ' + response.data.User[i].lastName);
+
+			var row = '<li class="team-description"><b>' + response.data.Team.name + '</b><br/>' +
+					'&laquo; <i>' + response.data.Team.description + '</i> &raquo;<br/>' +
+					'<b>Membres : </b><ul><li>' + members.join('</li><li>') + '</li></ul>' +
+					'<b>Tournoi : </b>' + response.data.Tournament[0].name + '<br/>' +
+					'<b>Code : </b><input type="text" value="' + response.data.Team.code + '" style="width:5em" readonly/> ' +
+					'<span class="button button-leave-team" data-team="' + response.data.Team.id + '">Quitter</span> ' +
+					'<span class="button button-delete-team" data-team="' + response.data.Team.id + '">Supprimer</span></li>';
+			$(".my-teams-list").append(row);
 		});
 	});
 }
