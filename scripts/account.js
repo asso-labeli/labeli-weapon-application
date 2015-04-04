@@ -31,18 +31,16 @@ $(document).ready(function () {
 
 
 
-	$("#connect").on("click", ".button", function () {
+	$("#connect").submit(function () {
 		var username = $("#connect .username").val();
 		var password = $("#connect .password").val();
 		$.post("http://weapon.labeli.org/users/login.json", {"data[User][username]": username, "data[User][password]": password}, function (response) {
-			$("#access-account").hide();
-			$("#my-infos").show();
-			loadInfos(response.data);
-
+			window.location = "/mon-compte";
 		}, "json")
 				.fail(function () {
 					$("#connect .errors").text("Oops. Veuillez vérifier vos informations.");
 				});
+		return false;
 	});
 
 	$("#signup").on("click", ".button", function () {
